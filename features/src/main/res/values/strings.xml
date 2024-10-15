@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ForecastApp</string>
+    <string name="content_description_saved_regions">Saved regions</string>
+    <string name="content_description_search_regions">Search regions</string>
+    <string name="content_description_date">Date</string>
+    <string name="content_description_wind">Wind</string>
+    <string name="content_description_none">None</string>
+</resources>

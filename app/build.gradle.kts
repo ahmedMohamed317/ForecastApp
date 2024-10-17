@@ -84,11 +84,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     kapt("androidx.hilt:hilt-compiler:1.1.0")
 
-    //Room
-    val room = "2.6.0"
-    implementation("androidx.room:room-runtime:${room}")
-    implementation("androidx.room:room-ktx:${room}")
-    ksp("androidx.room:room-compiler:${room}")
 
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")

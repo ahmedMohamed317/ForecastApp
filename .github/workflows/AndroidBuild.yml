@@ -23,21 +23,16 @@ jobs:
         uses: actions/setup-java@v3.13.0
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'temurin'  # Replaced 'adopt' with 'temurin'
 
       - name: Clean Project
         run: ./gradlew clean
 
       - name: Build With Gradle
-        run: ./gradlew build
-
-      - name: Build APK
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx2048m"
 
       - name: Run Lint
-        run: ./gradlew lint
+        run: ./gradlew lint --stacktrace
 
       - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest
-
-
+        run: ./gradlew testDebugUnitTest --stacktrace

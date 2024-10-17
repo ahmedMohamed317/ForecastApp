@@ -7,7 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import domain.repository.AppRepository
+import domain.usecase.GetCurrentWeatherUseCase
 import domain.usecase.GetSearchResultsUseCase
+import domain.usecase.GetWeatherForecastUseCase
 import javax.inject.Singleton
 
 @Module
@@ -18,6 +20,16 @@ object AppModule {
     @Singleton
     fun provideAppUseCases(repository: AppRepository): GetSearchResultsUseCase {
         return GetSearchResultsUseCase(repository)
+    }
+    @Provides
+    @Singleton
+    fun provideWeatherForecastUseCases(repository: AppRepository): GetWeatherForecastUseCase {
+        return GetWeatherForecastUseCase(repository)
+    }
+    @Provides
+    @Singleton
+    fun provideCurrentWeatherUseCases(repository: AppRepository): GetCurrentWeatherUseCase {
+        return GetCurrentWeatherUseCase(repository)
     }
 
     @Provides

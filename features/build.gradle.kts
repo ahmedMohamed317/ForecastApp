@@ -74,4 +74,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
     kapt("androidx.hilt:hilt-compiler:1.1.0")
 
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
+
 }

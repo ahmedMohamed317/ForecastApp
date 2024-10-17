@@ -23,13 +23,13 @@ jobs:
         uses: actions/setup-java@v3.13.0
         with:
           java-version: '17'
-          distribution: 'zulu'
+          distribution: 'temurin'
 
       - name: Clean Project
         run: ./gradlew clean
 
       - name: Build With Gradle
-        run: ./gradlew build --debug
+        run: ./gradlew build
 
       - name: Build APK
         run: ./gradlew assembleDebug

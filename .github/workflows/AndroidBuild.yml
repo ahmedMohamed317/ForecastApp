@@ -25,9 +25,11 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+      - name: Clean Project
+        run: ./gradlew clean
 
       - name: Build With Gradle
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build --debug
 
       - name: Build APK
         run: ./gradlew assembleDebug

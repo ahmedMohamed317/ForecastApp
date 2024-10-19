@@ -8,9 +8,8 @@ plugins {
 }
 
 android {
-    namespace = "com.task.features"
+    namespace = "com.task.mylibrary"
     compileSdk = 34
-
     defaultConfig {
         minSdk = 24
 
@@ -42,6 +41,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation(project(":core"))
     implementation(libs.androidx.core.ktx)
@@ -68,8 +68,7 @@ dependencies {
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
@@ -86,4 +85,5 @@ dependencies {
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.1")
     debugImplementation ("androidx.compose.ui:ui-tooling:1.5.1")
     debugImplementation ("androidx.compose.ui:ui-test-manifest:1.5.1")
+
 }

@@ -34,18 +34,16 @@ class CurrentWeatherDetailsViewModel @Inject constructor(
     val query: StateFlow<String?> = savedStateHandle.getStateFlow("name", null)
 
     init {
-        Log.d("CurrentWeatherDetailsInit", "fetchWeather: $query")
         query.value?.let {
             fetchWeather(it)
         }
     }
 
-    private fun fetchWeather(query : String) {
+    fun fetchWeather(query : String) {
         if (connectivityManager.isNetworkAvailable.value) {
             viewModelScope.launch {
                 _uiState.value = _uiState.value.copy(isLoading = true)
                 try {
-                    Log.d("CurrentWeatherDetailsViewModel", "fetchWeather: $query")
                     getCurrentWeatherUseCase.invoke(query).onEach {
                         when(it)
                         {
@@ -59,7 +57,7 @@ class CurrentWeatherDetailsViewModel @Inject constructor(
                 }
             }
         } else {
-            _uiState.value = _uiState.value.copy(error = "No internet connection")
+            _uiState.value = _uiState.value.copy(error = "No internet connection", isLoading = false)
         }
     }
 }

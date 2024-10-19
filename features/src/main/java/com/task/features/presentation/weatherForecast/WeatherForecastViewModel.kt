@@ -47,7 +47,7 @@ class WeatherForecastViewModel @Inject constructor(
         _intentChannel.value = intent
     }
 
-    private fun fetchWeather(query: String) {
+    fun fetchWeather(query: String) {
         if (connectivityManager.isNetworkAvailable.value) {
             viewModelScope.launch {
                 _uiState.value = _uiState.value.copy(isLoading = true, error = null)

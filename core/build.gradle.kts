@@ -18,6 +18,13 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    packaging {
+        resources {
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -48,6 +55,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -60,6 +68,14 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.1")
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 
+    //Mockk
+    testImplementation ("io.mockk:mockk:1.13.5")
+    androidTestImplementation ("io.mockk:mockk-android:1.13.5")
+
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.1")
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.5.1")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.5.1")
 
 
 }

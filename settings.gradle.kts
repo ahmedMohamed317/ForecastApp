@@ -23,3 +23,4 @@ rootProject.name = "ForecastApp"
 include(":app")
 include(":core")
 include(":features")
+include(":data")

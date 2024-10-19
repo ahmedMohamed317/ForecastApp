@@ -27,10 +27,8 @@ class SearchScreenViewModel @Inject constructor(
 
     private val _state = mutableStateOf(SearchScreenState())
     val state: State<SearchScreenState> = _state
-
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    private val _eventFlow = MutableSharedFlow<UiEvent>(replay = 1)
     val eventFlow = _eventFlow.asSharedFlow()
-
     var loading = mutableStateOf(false)
         private set
 
@@ -41,7 +39,6 @@ class SearchScreenViewModel @Inject constructor(
     }
 
     fun onQueryChanged(newQuery: String) {
-        Log.d("SearchScreenViewModel", "onQueryChanged: $newQuery")
         _state.value = _state.value.copy(query = newQuery)
         if (newQuery.isNotBlank()) {
             onEvent(SearchScreenEvent.CitiesSearchResults(newQuery))
@@ -65,7 +62,9 @@ class SearchScreenViewModel @Inject constructor(
     }
 
     private suspend fun doSearch(query: String) {
+
         if (!connectivityManager.isNetworkAvailable.value) {
+
             _eventFlow.emit(
                 UiEvent.ShowSnackbar("No network available")
             )

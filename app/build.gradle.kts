@@ -56,6 +56,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":features"))
+    implementation(project(":data"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -74,10 +75,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-rc01")
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.1")
+    debugImplementation ("androidx.compose.ui:ui-tooling:1.5.1")
+    debugImplementation ("androidx.compose.ui:ui-test-manifest:1.5.1")
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
@@ -120,4 +124,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.8")
     testImplementation("androidx.test.ext:junit:1.1.5")
     testImplementation ("app.cash.turbine:turbine:1.0.0")
+
+    //Mockk
+    testImplementation ("io.mockk:mockk:1.13.5")
+    androidTestImplementation ("io.mockk:mockk-android:1.13.5")
 }

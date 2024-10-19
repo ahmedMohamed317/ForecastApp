@@ -36,8 +36,10 @@ import java.util.Locale
 fun WeatherDetailsScreen(
     country: String?,
     uiState: CurrentWeatherScreenState,
-    onButtonClick : (String) -> Unit = {}
-) {
+    onButtonClick : (String) -> Unit = {},
+    onStartIconClicked: () -> Unit,
+
+    ) {
 
     Column(
         modifier = Modifier
@@ -49,7 +51,8 @@ fun WeatherDetailsScreen(
         CenterContentTopAppBar(
             title = { CustomText(text = "Current Weather", color = MaterialTheme.colorScheme.secondary, size = 20) },
             startIcon = ImageVector.vectorResource(id = R.drawable.ic_back),
-            onStartIconClicked = {},
+            onStartIconClicked = {onStartIconClicked()},
+            shouldShowBackArrow = true
 
         )
         MediumVerticalSpacer()
@@ -181,5 +184,5 @@ fun WeatherDetailsScreenPreview() {
     WeatherDetailsScreen("alexandria",
         CurrentWeatherScreenState(
             weather = WeatherUiModel(mainWeather = "Cloudy"
-        , description = "Semi cloudy at day", icon = "", date = "17/10/2024",13.5,12,12),))
+        , description = "Semi cloudy at day", icon = "", date = "17/10/2024",13.5,12,12),)){}
 }

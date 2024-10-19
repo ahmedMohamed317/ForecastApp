@@ -1,6 +1,5 @@
 package com.task.features.presentation.search
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,6 +34,7 @@ fun SearchScreen(
             title = { Text("Search", color = Color.Black) },
             startIcon = ImageVector.vectorResource(id = R.drawable.ic_back),
             onStartIconClicked = {},
+            shouldShowBackArrow = false
         )
         MediumVerticalSpacer()
         Content(

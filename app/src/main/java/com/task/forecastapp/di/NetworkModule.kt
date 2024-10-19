@@ -3,7 +3,7 @@ package com.task.forecastapp.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.task.forecastapp.data.RetrofitService
+import com.task.data.RetrofitService
 import util.BASE_URL
 import dagger.Module
 import dagger.Provides

@@ -32,16 +32,18 @@ fun CenterContentTopAppBar(
     onStartIconClicked: () -> Unit,
     endIcon: ImageVector? = null,
     endIconContentDescription: String = stringResource(id = R.string.content_description_none),
-    onEndIconClicked: (() -> Unit)? = null
+    onEndIconClicked: (() -> Unit)? = null,
+    shouldShowBackArrow: Boolean = false
 ) {
     CenterAlignedTopAppBar(
         title = {
-            // Ensure title composable is centered properly
             title()
         },
         navigationIcon = {
-            IconButton(onClick = onStartIconClicked) {
-                Icon(imageVector = startIcon, contentDescription = startIconContentDescription)
+            if (shouldShowBackArrow) {
+                IconButton(onClick = onStartIconClicked) {
+                    Icon(imageVector = startIcon, contentDescription = startIconContentDescription)
+                }
             }
         },
         actions = {
@@ -66,8 +68,7 @@ private fun CenterContentTopAppBarPreview() {
         startIconContentDescription = stringResource(id = R.string.content_description_saved_regions),
         onStartIconClicked = { },
         endIcon = ImageVector.vectorResource(id = R.drawable.ic_search),
-        endIconContentDescription = stringResource(id = R.string.content_description_search_regions)
-    ) {
-        // Handle end icon click
-    }
+        endIconContentDescription = stringResource(id = R.string.content_description_search_regions),
+        shouldShowBackArrow = false
+    )
 }

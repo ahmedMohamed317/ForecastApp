@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":features"))
     implementation(project(":data"))
+    implementation(project(":forecast"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

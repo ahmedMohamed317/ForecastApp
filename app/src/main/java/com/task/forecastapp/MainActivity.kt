@@ -23,7 +23,7 @@ import com.task.features.presentation.components.DisposableEffectWithLifeCycle
 import com.task.features.presentation.search.SearchScreen
 import com.task.features.presentation.weatherDetails.CurrentWeatherDetailsViewModel
 import com.task.features.presentation.weatherDetails.WeatherDetailsScreen
-import com.task.features.presentation.weatherForecast.WeatherForecastScreen
+import com.task.forecast.weatherForecast.WeatherForecastScreen
 import com.task.features.presentation.weatherForecast.WeatherForecastViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import util.ConnectivityManager
@@ -80,8 +80,10 @@ private fun ForecastApp( modifier: Modifier = Modifier,paddingValues:PaddingValu
             val viewModel: CurrentWeatherDetailsViewModel = hiltViewModel()
             val country by viewModel.query.collectAsState()
             val uiState by viewModel.uiState.collectAsState()
-            WeatherDetailsScreen(country,uiState){
+            WeatherDetailsScreen(country,uiState,onButtonClick = {
                 navController.navigate("details/${country?.trim()?.split(" ")?.first()}")
+            }){
+                navController.popBackStack()
             }
         }
         composable(
@@ -94,7 +96,7 @@ private fun ForecastApp( modifier: Modifier = Modifier,paddingValues:PaddingValu
         ) {
             val viewModel: WeatherForecastViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsState()
-            WeatherForecastScreen(uiState = uiState )
+            WeatherForecastScreen(uiState = uiState ){navController.popBackStack()}
         }
     }
 }

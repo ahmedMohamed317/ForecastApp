@@ -1,7 +1,7 @@
 package com.task.forecastapp.di
 
-import com.task.forecastapp.data.RetrofitService
-import com.task.forecastapp.data.repository.AppRepositoryImpl
+import com.task.data.RetrofitService
+import com.task.data.repository.AppRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

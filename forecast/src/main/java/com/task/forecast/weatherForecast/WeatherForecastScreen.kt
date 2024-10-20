@@ -66,7 +66,7 @@ fun WeatherForecastScreen(
             )
         MediumVerticalSpacer()
         LazyRow {
-            val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.Yellow, Color.Gray, Color.Cyan, Color.Magenta)
+            val colors = listOf(Color(0xFFceb7a3), Color(0xFF006887), Color(0xFF00916f), Color(0xFFf8a96b), Color(0xFFb3daf1), Color(0xFFffd703), Color(0xFF15b2d3))
             itemsIndexed(uiState.weather ?: emptyList()) { index, item ->
                 val backgroundColor = colors[index % colors.size]
                 Card(
@@ -79,7 +79,7 @@ fun WeatherForecastScreen(
                     ,shape = RoundedCornerShape(16.dp)
                 ) {
                     Column(Modifier.padding(16.dp)) {
-                        CustomText(text = "${item.temperature} ℉", size = 40, color = Color.White)
+                        CustomText(text = "${item.temperature.toDouble().toCelsius()} °C", size = 40, color = Color.White)
 
                         Image(
                             painter = rememberAsyncImagePainter(getIconLink(item.icon)),

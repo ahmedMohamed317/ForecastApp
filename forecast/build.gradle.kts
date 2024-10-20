@@ -87,4 +87,7 @@ dependencies {
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.5.1")
     debugImplementation ("androidx.compose.ui:ui-tooling:1.5.1")
     debugImplementation ("androidx.compose.ui:ui-test-manifest:1.5.1")
+
+    // Forecast
+    implementation (libs.forecast.library)
 }

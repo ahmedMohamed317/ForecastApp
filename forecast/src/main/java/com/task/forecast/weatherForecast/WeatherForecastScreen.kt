@@ -35,6 +35,9 @@ import com.task.features.presentation.weatherDetails.CustomText
 import com.task.features.presentation.weatherForecast.ForecastUiModel
 import com.task.features.presentation.weatherForecast.WeatherForecastScreenState
 import util.getIconLink
+import com.task.forecastutilis.toCelsius
+import com.task.forecastutilis.toFormattedDate
+
 
 @Composable
 fun WeatherForecastScreen(

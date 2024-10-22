@@ -27,8 +27,8 @@ fun SearchScreen(
     paddingValues: PaddingValues,
     onRecommendationClicked: (location: City) -> Unit
 ) {
-    val state = viewModel.state.value
-
+    val citiesState = viewModel.citiesState.value
+    val query = viewModel.query.value
     Column(modifier = Modifier.padding(paddingValues)) {
         CenterContentTopAppBar(
             title = { Text("Search", color = Color.Black) },
@@ -38,14 +38,14 @@ fun SearchScreen(
         )
         MediumVerticalSpacer()
         Content(
-            searchFieldValue = state.query,
+            searchFieldValue = query,
             onSearchFieldValueChanged = { newValue ->
                 viewModel.onQueryChanged(newValue)
             },
-            recommendationResult = state.data,
+            recommendationResult = citiesState,
             onRecommendationClicked = onRecommendationClicked,
             onSearchFieldValueCleared = viewModel::clearQuery,
-            isClearSearchQueryVisible = state.query.isNotBlank()
+            isClearSearchQueryVisible = query.isNotBlank()
         )
     }
 }

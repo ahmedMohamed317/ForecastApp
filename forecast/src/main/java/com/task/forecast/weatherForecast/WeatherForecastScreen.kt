@@ -32,17 +32,12 @@ import com.task.features.presentation.components.CenterContentTopAppBar
 import com.task.features.presentation.components.MediumVerticalSpacer
 import com.task.features.presentation.components.SmallVerticalSpacer
 import com.task.features.presentation.weatherDetails.CustomText
-import com.task.features.presentation.weatherForecast.ForecastUiModel
-import com.task.features.presentation.weatherForecast.WeatherForecastScreenState
 import util.getIconLink
-import com.task.forecastutilis.toCelsius
-import com.task.forecastutilis.toFormattedDate
-
 
 @Composable
 fun WeatherForecastScreen(
     uiState: WeatherForecastScreenState,
-    onBackIconClicked: () -> Unit ,
+    onBackIconClicked: () -> Unit,
     ) {
 
     Column(
@@ -79,7 +74,7 @@ fun WeatherForecastScreen(
                     ,shape = RoundedCornerShape(16.dp)
                 ) {
                     Column(Modifier.padding(16.dp)) {
-                        CustomText(text = "${item.temperature.toDouble().toCelsius()} °C", size = 40, color = Color.White)
+                        CustomText(text = "${item.temperature} °F", size = 40, color = Color.White)
 
                         Image(
                             painter = rememberAsyncImagePainter(getIconLink(item.icon)),

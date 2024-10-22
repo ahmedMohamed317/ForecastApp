@@ -1,4 +1,4 @@
-package com.task.features.presentation.weatherForecast
+package com.task.forecast.weatherForecast
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -21,15 +21,15 @@ class WeatherForecastViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(WeatherForecastScreenState())
     val uiState: StateFlow<WeatherForecastScreenState> = _uiState
-    val query: StateFlow<String?> = savedStateHandle.getStateFlow("name", null)
     private val _intentChannel = MutableStateFlow<WeatherForecastIntent?>(null)
+    private val query: StateFlow<String?> = savedStateHandle.getStateFlow("name", null)
 
     init {
         viewModelScope.launch {
             _intentChannel.collect { intent ->
                 when (intent) {
                     is WeatherForecastIntent.FetchWeather -> {
-                        fetchWeather(intent.query)
+                        query.value?.let { fetchWeather(it) }
                     }
 
                     else -> {}
@@ -37,14 +37,15 @@ class WeatherForecastViewModel @Inject constructor(
             }
         }
 
-        val query = savedStateHandle.get<String>("name")
-        if (query != null) {
-            processIntent(WeatherForecastIntent.FetchWeather(query))
+        viewModelScope.launch {
+            if (query.value != null) {
+                processIntent(WeatherForecastIntent.FetchWeather)
+            }
         }
     }
 
-    private fun processIntent(intent: WeatherForecastIntent) {
-        _intentChannel.value = intent
+   private suspend fun processIntent(intent: WeatherForecastIntent) {
+        _intentChannel.emit(intent)
     }
 
     fun fetchWeather(query: String) {

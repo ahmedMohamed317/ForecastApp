@@ -1,5 +1,5 @@
-package com.task.features.presentation.weatherForecast
+package com.task.forecast.weatherForecast
 
-sealed class WeatherForecastIntent {
-    data class FetchWeather(val query: String) : WeatherForecastIntent()
+sealed interface WeatherForecastIntent {
+    data object FetchWeather : WeatherForecastIntent
 }

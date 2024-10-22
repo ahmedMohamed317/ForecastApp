@@ -35,7 +35,9 @@ import java.util.Locale
 @Composable
 fun WeatherDetailsScreen(
     country: String?,
-    uiState: CurrentWeatherScreenState,
+    weatherState: WeatherUiModel,
+    isLoading : Boolean ,
+    error : String?,
     onButtonClick : (String) -> Unit = {},
     onStartIconClicked: () -> Unit,
 
@@ -64,48 +66,48 @@ fun WeatherDetailsScreen(
         }
 
         when {
-            uiState.isLoading -> {
+            isLoading -> {
                 CircularProgressIndicator(
                     Modifier
                         .padding(16.dp)
                         .align(alignment = Alignment.CenterHorizontally)
                 )
             }
-            uiState.error != null -> {
+            error != null -> {
                 CustomText(
-                    text = uiState.error ?: "Unknown error",
+                    text = error ?: "Unknown error",
                     size = 16,
                     color = Color.Black
                 )
             }
-            uiState.weather != null -> {
+            weatherState != null -> {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    CustomText(text = "${uiState.weather.temperature} ℉", size = 40)
+                    CustomText(text = "${weatherState.temperature} ℉", size = 40)
                     SmallVerticalSpacer()
 
                     Image(
-                        painter = rememberAsyncImagePainter(getIconLink(uiState.weather.icon)),
+                        painter = rememberAsyncImagePainter(getIconLink(weatherState.icon)),
                         contentDescription = "Weather icon",
                         modifier = Modifier.size(64.dp)
                     )
 
                     CustomText(
-                        text = uiState.weather.mainWeather,
+                        text = weatherState.mainWeather,
                         size = 16,
                     )
                     SmallVerticalSpacer()
                     CustomText(
-                        text = "Description: ${uiState.weather.description}",
+                        text = "Description: ${weatherState.description}",
                         size = 14,
                     )
                     MediumVerticalSpacer()
                     CustomText(
-                        text = "Date: ${uiState.weather.date}",
+                        text = "Date: ${weatherState.date}",
                     )
 
                     Row(
@@ -123,7 +125,7 @@ fun WeatherDetailsScreen(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "${uiState.weather.windSpeed} m/s",
+                                text = "${weatherState.windSpeed} m/s",
                                 fontSize = 16.sp,
                             )
                         }
@@ -137,7 +139,7 @@ fun WeatherDetailsScreen(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "${uiState.weather.cloudiness}%",
+                                text = "${weatherState.cloudiness}%",
                                 fontSize = 16.sp,
                             )
                         }
@@ -181,8 +183,7 @@ fun CustomText(
 @Preview(showSystemUi = true , showBackground = true)
 @Composable
 fun WeatherDetailsScreenPreview() {
-    WeatherDetailsScreen("alexandria",
-        CurrentWeatherScreenState(
-            weather = WeatherUiModel(mainWeather = "Cloudy"
-        , description = "Semi cloudy at day", icon = "", date = "17/10/2024",13.5,12,12),)){}
+    WeatherDetailsScreen("alexandria",error = null, isLoading = false,
+            weatherState = WeatherUiModel(mainWeather = "Cloudy"
+        , description = "Semi cloudy at day", icon = "", date = "17/10/2024",13.5,12,12),){}
 }

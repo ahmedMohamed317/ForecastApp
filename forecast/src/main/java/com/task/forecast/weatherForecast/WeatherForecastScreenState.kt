@@ -1,11 +1,10 @@
-package com.task.features.presentation.weatherForecast
+package com.task.forecast.weatherForecast
 
-import domain.model.CurrentWeather
 import domain.model.WeatherForecast
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
+import com.task.forecastutilis.toFormattedDate
 
 
 data class WeatherForecastScreenState(
@@ -15,16 +14,12 @@ data class WeatherForecastScreenState(
 )
 
 fun WeatherForecast.toUiModel(): List<ForecastUiModel> {
-    val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-
     return weatherData.map { data ->
-        val date = Date(data.timestamp * 1000)
-        val formattedDate = dateFormatter.format(date)
         ForecastUiModel(
             mainWeather = data.weatherDescriptions.firstOrNull()?.main ?: "Unknown",
             description = data.weatherDescriptions.firstOrNull()?.description ?: "No description",
             icon = data.weatherDescriptions.firstOrNull()?.icon ?: "",
-            date = formattedDate,
+            date = data.timestamp.toFormattedDate(),
             windSpeed = data.wind.speed,
             cloudiness = data.clouds.all,
             temperature = data.mainData.temperature.toInt()

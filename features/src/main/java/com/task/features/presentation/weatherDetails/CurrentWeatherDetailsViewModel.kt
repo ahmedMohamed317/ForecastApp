@@ -28,9 +28,10 @@ class CurrentWeatherDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CurrentWeatherScreenState())
-    val uiState: StateFlow<CurrentWeatherScreenState> = _uiState
-
+    var weather = MutableStateFlow( WeatherUiModel("","", "", "", 0.0, 0, 0))
+        private set
+    val isLoading = MutableStateFlow(true)
+    val error = MutableStateFlow<String?>(null)
     val query: StateFlow<String?> = savedStateHandle.getStateFlow("name", null)
 
     init {
@@ -42,22 +43,28 @@ class CurrentWeatherDetailsViewModel @Inject constructor(
     fun fetchWeather(query : String) {
         if (connectivityManager.isNetworkAvailable.value) {
             viewModelScope.launch {
-                _uiState.value = _uiState.value.copy(isLoading = true)
                 try {
                     getCurrentWeatherUseCase.invoke(query).onEach {
                         when(it)
                         {
-                            is Result.Loading ->_uiState.value = _uiState.value.copy(weather = null, isLoading = true)
-                            is Result.Error ->_uiState.value = _uiState.value.copy(error = it.exception.message, isLoading = false)
-                            is Result.Success ->_uiState.value = _uiState.value.copy(weather =it.data.toUiModel(), isLoading = false)
+                            is Result.Loading -> isLoading.value = true
+                            is Result.Error -> {
+                                error.value = it.exception.message
+                                isLoading.value=false}
+                            is Result.Success -> {
+                                weather.value = it.data.toUiModel()
+                                isLoading.value = false
+                            }
                     }
                 }.launchIn(viewModelScope)
                 } catch (e: Exception) {
-                    _uiState.value = _uiState.value.copy(error = "Failed to load weather", isLoading = false)
+                    error.value = "Failed to load weather"
+                    isLoading.value = false
                 }
             }
         } else {
-            _uiState.value = _uiState.value.copy(error = "No internet connection", isLoading = false)
+            error.value =  "No internet connection"
+            isLoading.value = false
         }
     }
 }

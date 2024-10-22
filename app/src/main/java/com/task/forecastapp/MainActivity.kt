@@ -24,7 +24,7 @@ import com.task.features.presentation.search.SearchScreen
 import com.task.features.presentation.weatherDetails.CurrentWeatherDetailsViewModel
 import com.task.features.presentation.weatherDetails.WeatherDetailsScreen
 import com.task.forecast.weatherForecast.WeatherForecastScreen
-import com.task.features.presentation.weatherForecast.WeatherForecastViewModel
+import com.task.forecast.weatherForecast.WeatherForecastViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import util.ConnectivityManager
 import javax.inject.Inject
@@ -47,8 +47,8 @@ class MainActivity : ComponentActivity() {
                 }
             )
             WeatherAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ForecastApp(paddingValues = innerPadding)
+                Scaffold(topBar = {},modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    ForecastApp(paddingValues = PaddingValues(top = innerPadding.calculateTopPadding(), bottom = innerPadding.calculateBottomPadding() ))
                 }
             }
         }
@@ -79,8 +79,11 @@ private fun ForecastApp( modifier: Modifier = Modifier,paddingValues:PaddingValu
         ) {
             val viewModel: CurrentWeatherDetailsViewModel = hiltViewModel()
             val country by viewModel.query.collectAsState()
-            val uiState by viewModel.uiState.collectAsState()
-            WeatherDetailsScreen(country,uiState,onButtonClick = {
+            val weatherState by viewModel.weather.collectAsState()
+            val error by viewModel.error.collectAsState()
+            val isLoading by viewModel.isLoading.collectAsState()
+
+            WeatherDetailsScreen(country,weatherState,isLoading,error,onButtonClick = {
                 navController.navigate("details/${country?.trim()?.split(" ")?.first()}")
             }){
                 navController.popBackStack()

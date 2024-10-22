@@ -10,13 +10,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import domain.usecase.GetSearchResultsUseCase
 import domain.Result
-import kotlinx.coroutines.Dispatchers
+import domain.model.City
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 @HiltViewModel
 class SearchScreenViewModel @Inject constructor(
@@ -25,8 +24,10 @@ class SearchScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(SearchScreenState())
-    val state: State<SearchScreenState> = _state
+    private val _citiesState = mutableStateOf<List<City>>(emptyList())
+    val citiesState: State<List<City>> = _citiesState
+    private val _query = mutableStateOf("")
+    val query: State<String> = _query
     private val _eventFlow = MutableSharedFlow<UiEvent>(replay = 1)
     val eventFlow = _eventFlow.asSharedFlow()
     var loading = mutableStateOf(false)
@@ -39,18 +40,17 @@ class SearchScreenViewModel @Inject constructor(
     }
 
     fun onQueryChanged(newQuery: String) {
-        _state.value = _state.value.copy(query = newQuery)
+        _query.value = newQuery
         if (newQuery.isNotBlank()) {
             onEvent(SearchScreenEvent.CitiesSearchResults(newQuery))
         }
     }
 
     fun clearQuery() {
-        Log.d("SearchScreenViewModel", "cleanQuery")
-        _state.value = _state.value.copy(query = "", data = emptyList())
+        _query.value = ""
     }
 
-    fun onEvent(event: SearchScreenEvent) {
+    private fun onEvent(event: SearchScreenEvent) {
         when (event) {
             is SearchScreenEvent.CitiesSearchResults -> {
                 viewModelScope.launch {
@@ -77,7 +77,7 @@ class SearchScreenViewModel @Inject constructor(
                 when (result) {
                     is Result.Success -> {
                         loading.value = false
-                        _state.value = _state.value.copy(data = result.data)
+                        _citiesState.value = result.data
                     }
                     is Result.Error -> {
                         loading.value = false

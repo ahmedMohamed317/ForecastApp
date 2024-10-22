@@ -1,4 +1,4 @@
-package com.task.features.presentation.search
+package com.task.searching.search
 
 import android.util.Log
 import androidx.compose.runtime.State

@@ -28,7 +28,7 @@ class SearchScreenViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: SearchScreenViewModel
+    private lateinit var viewModel: com.task.searching.search.SearchScreenViewModel
     private lateinit var getSearchResultsUseCase: GetSearchResultsUseCase
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var savedStateHandle: SavedStateHandle
@@ -44,7 +44,7 @@ class SearchScreenViewModelTest {
         every { savedStateHandle.get<String>("q") } returns "testQuery"
         every { connectivityManager.isNetworkAvailable.value } returns true
 
-        viewModel = SearchScreenViewModel(
+        viewModel = com.task.searching.search.SearchScreenViewModel(
             searchUseCases = getSearchResultsUseCase,
             connectivityManager = connectivityManager,
             savedStateHandle = savedStateHandle
@@ -72,8 +72,8 @@ class SearchScreenViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Then
-        assertEquals(query, viewModel.state.value.query)
-        assertEquals(cities, viewModel.state.value.data)
+        assertEquals(query, viewModel.query.value)
+        assertEquals(cities, viewModel.citiesState.value)
     }
 
     @Test
@@ -88,8 +88,8 @@ class SearchScreenViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Then
-        assertEquals(query, viewModel.state.value.query)
-        assertTrue(viewModel.state.value.data.isEmpty())
+        assertEquals(query, viewModel.query.value)
+        assertTrue(viewModel.citiesState.value.isEmpty())
 
     }
 
@@ -105,7 +105,7 @@ class SearchScreenViewModelTest {
 
         // Then
         val event = viewModel.eventFlow.replayCache.last()
-        assertEquals("No network available", (event as? SearchScreenViewModel.UiEvent.ShowSnackbar)?.message)
+        assertEquals("No network available", (event as? com.task.searching.search.SearchScreenViewModel.UiEvent.ShowSnackbar)?.message)
         assertEquals(false, viewModel.loading.value)
     }
 }

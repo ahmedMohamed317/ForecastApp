@@ -1,4 +1,4 @@
-package com.task.features.presentation.search
+package com.task.searching.search
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import theme.WeatherAppTheme
 import com.task.features.presentation.components.DisposableEffectWithLifeCycle
-import com.task.features.presentation.search.SearchScreen
+import com.task.searching.search.SearchScreen
 import com.task.features.presentation.weatherDetails.CurrentWeatherDetailsViewModel
 import com.task.features.presentation.weatherDetails.WeatherDetailsScreen
 import com.task.forecast.weatherForecast.WeatherForecastScreen
@@ -60,10 +60,10 @@ private fun ForecastApp( modifier: Modifier = Modifier,paddingValues:PaddingValu
     NavHost(navController = navController, startDestination = "search") {
 
         composable(route = "search") {
-            SearchScreen(paddingValues = paddingValues){
+            com.task.searching.search.SearchScreen(paddingValues = paddingValues) {
                 try {
-                navController.navigate("search/${it.name.trim().split(" ").first()}")}
-                catch (e:Exception){
+                    navController.navigate("search/${it.name.trim().split(" ").first()}")
+                } catch (e: Exception) {
                     Log.d("MainActivity", "ForecastAppException: ${e.message}")
                 }
             }

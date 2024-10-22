@@ -65,8 +65,8 @@ class CurrentWeatherDetailsViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Then
-        assertEquals(weatherData.toUiModel(), viewModel.uiState.value.weather)
-        assertEquals(null, viewModel.uiState.value.error)
+        assertEquals(weatherData.toUiModel(), viewModel.weather.value)
+        assertEquals(null, viewModel.error.value)
     }
 
 
@@ -81,8 +81,8 @@ class CurrentWeatherDetailsViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Then
-        assertEquals(false, viewModel.uiState.value.isLoading)
-        assertEquals(errorMessage, viewModel.uiState.value.error)
+        assertEquals(false, viewModel.isLoading.value)
+        assertEquals(errorMessage, viewModel.error.value)
     }
 
     @Test
@@ -96,8 +96,8 @@ class CurrentWeatherDetailsViewModelTest {
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Then
-        assertEquals("No internet connection", viewModel.uiState.value.error)
-        assertEquals(false, viewModel.uiState.value.isLoading)
+        assertEquals("No internet connection", viewModel.error.value)
+        assertEquals(false, viewModel.isLoading.value)
     }
 }
 
